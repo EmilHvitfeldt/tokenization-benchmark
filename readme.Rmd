@@ -1,0 +1,38 @@
+
+```{r}
+library(hcandersenr)
+```
+
+```{r}
+text <- paste(hcandersen_en$text, collapse = " ")
+nchar(text)
+```
+
+## tokenizers package
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+bm <- bench::mark(check = FALSE,
+  character_shingles = tokenizers::tokenize_character_shingles(text),
+  characters         = tokenizers::tokenize_characters(text),
+  lines              = tokenizers::tokenize_lines(text),
+  ngrams             = tokenizers::tokenize_ngrams(text),
+  paragraphs         = tokenizers::tokenize_paragraphs(text),
+  ptb                = tokenizers::tokenize_ptb(text),
+  regex              = tokenizers::tokenize_regex(text),
+  sentences          = tokenizers::tokenize_sentences(text),
+  skip_ngrams        = tokenizers::tokenize_skip_ngrams(text),
+  tweets             = tokenizers::tokenize_tweets(text),
+  word_stems         = tokenizers::tokenize_word_stems(text),
+  words              = tokenizers::tokenize_words(text)
+)
+
+
+bm %>%
+  ggplot2::autoplot()
+```
+
